@@ -28,23 +28,35 @@ def match(tutorList,tuteeList,quota):       #matches tutees with tutor groups
             
             for tutor in tutorList:
                 researchType = tutor[4]     #base research type of tutor
-                tuteeType = tutor[5]        #type of tutees accepted
                 tuteeGroup = tutor[6]       #ID of tutor group
                 tutees = tutor[7]           #list of tutees in group
                 currentTutees = tutor[7].split(",")
                 numTutees = len(currentTutees)
-                if (student[4]=="" and courseType == researchType and gradType == tuteeType and numTutees<quota):
+                if (student[4]=="" and courseType == researchType and numTutees<quota):
                     student[4] = tutor[6]   #assign student to tutor groupID
-                    tutor[7] = tutor[7]+","+student[0]  
-                if (student[4]=="" and gradType == tuteeType and numTutees<quota):  #might need to remove grad type.
+                    tutor[7] = tutor[7]+","+student[0]
+
+            for tutor in tutorList:
+                tuteeGroup = tutor[6]       #ID of tutor group
+                tutees = tutor[7]           #list of tutees in group
+                currentTutees = tutor[7].split(",")
+                numTutees = len(currentTutees)
+                if (student[4]=="" and numTutees<quota):  #might need to remove grad type.
                     student[4] = tutor[6]
                     tutor[7]= tutor[7]+","+student[0]
+                if tutor[7][:1] == ",":
                     tutor[7]=tutor[7][1:]       #remove first comma
+                
     return tuteeList,tutorList
 
-#def rewrite(tuteeList):
+def rewrite(tutorList, tuteeList):
     
-
+    with open('Tutor.csv', 'wb') as csvfile:
+        for row in tutorList:
+            print(row)
+            csvWriter = csv.writer(csvfile, dialect='excel')
+            csvWriter.writerows(row)
+            print(row)
 def courseConvert(course):                  #converts tutee course into a base type for comparison with tutor research type
     if course == "UFBSCMSA" or course =="UFBSCMSB":
         cType = "pure"
@@ -63,11 +75,11 @@ def courseConvert(course):                  #converts tutee course into a base t
 
                 
 tuteeList,tutorList = listReader("Tutee.csv","Tutor.csv")
-quota = 8
+quota = 10
 
 print (tuteeList)
 tuteeList,tutorList = match(tutorList,tuteeList,quota)
-#rewrite(tuteeList)
+rewrite(tutorList,tuteeList)
 print(tuteeList)
 print(tutorList)
 
