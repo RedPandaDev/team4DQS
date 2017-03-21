@@ -60,6 +60,28 @@ def file_save():
     save.write(text2save)
     save.close() # `()` was missing.
 
+#------------ First Matching ------------#
+
+def FirstMatching():
+    matching = Toplevel(root)
+    matching.grid()
+    matching.grab_set()
+    label = Label(matching, text="Make sure you are matching the correct files.", font=("Calibri", 16))
+    label.grid(row=1, column=1, columnspan=3, sticky=W, padx=5, pady=5)
+    label = Label(matching, text="Enter number of students to be assigned to each tutor:")
+    label.grid(row=2, column=1, columnspan=2, sticky=W, padx=5, pady=5)
+
+    textQuota = Entry(matching)
+    textQuota.grid(row=2, column=3, sticky='', padx=5, pady=5)
+   
+    def close():
+        matching.destroy()
+
+    button = Button(matching, text="Okay", command=close)
+    button.grid(row = 3, column=2, sticky=W, padx=15, pady=5)
+    button = Button(matching, text="Cancel", command=close)
+    button.grid(row = 3, column=3, sticky=W, padx=15, pady=5)
+
 #------------ List Tutees ------------#
 
 def listTutees():
@@ -98,9 +120,9 @@ def listTutees():
         listingofTutees.grid()
         listingofTutees.grab_set()
         title = tutorName1, tutorName2, tutorName3
-        label = Label(listingofTutees, text='Tutees assigned to:', font=("Helvetica", 16))
+        label = Label(listingofTutees, text='Tutees assigned to:', font=("Calibri", 16))
         label.grid(row=1, column=1, sticky=E, padx=5, pady=5)
-        label = Label(listingofTutees, text=title, font=("Helvetica", 16))
+        label = Label(listingofTutees, text=title, font=("Calibri", 16))
         label.grid(row=1, column=2, sticky=W, padx=5, pady=5)
 
         def close():
@@ -119,36 +141,49 @@ def listTutees():
     button = Button(listingTutees, text="List Tutees", command=displayTutees)
     button.grid(row=4, column=1, columnspan=2, sticky=N, padx=5, pady=5)
 
-
-
-
-
-
-
 #------------ Main Layout ------------#
 
 def create_layout(frame):
     frame = Frame(frame)
-    frame.pack(side=LEFT, fill=BOTH)
+    frame.grid()
+
     w = Label(frame, text="Assign Students", font=("Helvetica", 16))
-    w.pack()
+    w.grid(row=1, column=1, columnspan=3, sticky='', padx=5, pady=5)
+
+    w = Label(frame, text="")
+    w.grid(row=1, column=1, sticky='', padx=5, pady=5)
+    w = Label(frame, text="")
+    w.grid(row=1, column=3, sticky='', padx=5, pady=5)
 
     b = Button(frame, text='Open Student File', command=OpenTuteeFile, width=40)
-    b.pack(pady=5, padx=30)
+    b.grid(row=2, column=2, sticky=E, padx=15, pady=5)
+
     c = Button(frame, text='Open Tutor File', command=OpenTutorFile, width=40)
-    c.pack(pady=5, padx=30)
-    d = Button(frame, text='Assign All Students', command=donothing, width=40)
-    d.pack(pady=5, padx=20)
+    c.grid(row=3, column=2, sticky='', padx=15, pady=5)
+
+    w = Label(frame, text="")
+    w.grid(row=4, column=2, sticky='', padx=5, pady=5)
+
+    d = Button(frame, text='Assign All Students', command=FirstMatching, width=40)
+    d.grid(row=5, column=2, sticky='', padx=15, pady=5)
+
     e = Button(frame, text='Find a Student', command=donothing, width=40)
-    e.pack(pady=5, padx=20)
+    e.grid(row=6, column=2, sticky='', padx=15, pady=5)
+
     f = Button(frame, text='Re-assign a Student', command=donothing, width=40)
-    f.pack(pady=5, padx=20)
+    f.grid(row=7, column=2, sticky='', padx=15, pady=5)
+
     g = Button(frame, text='Quota', command=donothing, width=40)
-    g.pack(pady=5, padx=20)
+    g.grid(row=8, column=2, sticky='', padx=15, pady=5)
+
     h = Button(frame, text='List Tutees', command=listTutees, width=40)
-    h.pack(pady=5, padx=20)
+    h.grid(row=9, column=2, sticky='', padx=15, pady=5)
+
+    w = Label(frame, text="")
+    w.grid(row=10, column=3, sticky='', padx=5, pady=5)
+
     i = Button(frame, text='Exit', command=root.quit, width=40)
-    i.pack(pady=5, padx=20)
+    i.grid(row=11, column=2, sticky='', padx=15, pady=5)
 
 
 root = Tk()
