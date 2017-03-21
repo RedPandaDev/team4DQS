@@ -163,23 +163,26 @@ def listTutees():
     listingTutees = Toplevel(root)
     listingTutees.grid()
     listingTutees.grab_set()
+    
+    label = Label(listingTutees, text='Enter Tutor name you want to know about:', font=("Calibri", 16))
+    label.grid(row=1, column=1, columnspan=2, sticky=E, padx=5, pady=5)
 
     labelName = Label(listingTutees, text="Enter Tutor Forename: ")
-    labelName.grid(row=1, column=1, sticky=W, padx=5, pady=5)
+    labelName.grid(row=2, column=1, sticky=E, padx=5, pady=5)
     textName = Entry(listingTutees)
-    textName.grid(row=1, column=2, sticky=W, padx=5, pady=5)
+    textName.grid(row=2, column=2, sticky=W, padx=5, pady=5)
     textName.delete(0, END)
 
     labelMidName = Label(listingTutees, text="Enter Tutor Middle Name: ")
-    labelMidName.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+    labelMidName.grid(row=3, column=1, sticky=E, padx=5, pady=5)
     textMidName = Entry(listingTutees)
-    textMidName.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+    textMidName.grid(row=3, column=2, sticky=W, padx=5, pady=5)
     textMidName.delete(0, END)
 
     labelSurame = Label(listingTutees, text="Enter Tutor Surname: ")
-    labelSurame.grid(row=3, column=1, sticky=W, padx=5, pady=5)
+    labelSurame.grid(row=4, column=1, sticky=E, padx=5, pady=5)
     textSurame = Entry(listingTutees)
-    textSurame.grid(row=3, column=2, sticky=W, padx=5, pady=5)
+    textSurame.grid(row=4, column=2, sticky=W, padx=5, pady=5)
     textSurame.delete(0, END)
 
     def displayTutees():
@@ -200,7 +203,7 @@ def listTutees():
         label = Label(listingofTutees, text=title, font=("Calibri", 16))
         label.grid(row=1, column=2, sticky=W, padx=5, pady=5)
 
-        def close():
+        def closeListingofTutees():
             listingofTutees.destroy()
 
         i = 1
@@ -210,11 +213,16 @@ def listTutees():
             label = Label(listingofTutees, text=a)
             label.grid(row=i, column=1, columnspan=2, sticky=W, padx=5, pady=5)
 
-        button = Button(listingofTutees, text="Okay", command=close)
+        button = Button(listingofTutees, text="Okay", command=closeListingofTutees)
         button.grid(row = i+1, column=1, columnspan=2, sticky=N, padx=5, pady=5)
 
+    def closeListingTutees():
+        listingTutees.destroy()
+
     button = Button(listingTutees, text="List Tutees", command=displayTutees)
-    button.grid(row=4, column=1, columnspan=2, sticky=N, padx=5, pady=5)
+    button.grid(row=5, column=1,  sticky=N, padx=5, pady=5)
+    button = Button(listingTutees, text="Cancel", command=closeListingTutees)
+    button.grid(row=5, column=2, sticky=N, padx=5, pady=5)
 
 #------------ Main Layout ------------#
 
