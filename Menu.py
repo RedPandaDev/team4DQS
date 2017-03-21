@@ -3,6 +3,7 @@ from tkinter.filedialog import askopenfilename as aofn
 from tkinter.filedialog import asksaveasfile as asfn
 from DisplayListsTutees import tuteeList
 from initialMatching import mainMatching, setQuota, resetMatching
+from indvStudent import indvTutee
 
 
 tuteeLink = "Tutee.csv"
@@ -63,6 +64,7 @@ def file_save():
     save.close() # `()` was missing.
 
 #------------ Clear Matching ------------#
+
 def clearMatching():
     clear = Toplevel(root)
     clear.grid()
@@ -98,8 +100,6 @@ def clearMatching():
     button.grid(row = 3, column=3, sticky=W, padx=15, pady=5)
 
     
-
-
 #------------ First Matching ------------#
 
 def FirstMatching():
@@ -157,6 +157,99 @@ def FirstMatching():
     button = Button(matching, text="Cancel", command=closeMatching)
     button.grid(row = 3, column=3, sticky=W, padx=15, pady=5)
 
+#------------ Find Individual Student ------------#
+
+def findIndStu(): 
+    findingIndStu = Toplevel(root)
+    findingIndStu.grid()
+    findingIndStu.grab_set()
+    
+    label = Label(findingIndStu, text='Enter Tutor name you want to know about:', font=("Calibri", 16))
+    label.grid(row=1, column=1, columnspan=2, sticky=E, padx=5, pady=5)
+
+    labelName = Label(findingIndStu, text="Enter Tutor Forename: ")
+    labelName.grid(row=2, column=1, sticky=E, padx=5, pady=5)
+    textName = Entry(findingIndStu)
+    textName.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+    textName.delete(0, END)
+
+    labelMidName = Label(findingIndStu, text="Enter Tutor Middle Name: ")
+    labelMidName.grid(row=3, column=1, sticky=E, padx=5, pady=5)
+    textMidName = Entry(findingIndStu)
+    textMidName.grid(row=3, column=2, sticky=W, padx=5, pady=5)
+    textMidName.delete(0, END)
+
+    labelSurame = Label(findingIndStu, text="Enter Tutor Surname: ")
+    labelSurame.grid(row=4, column=1, sticky=E, padx=5, pady=5)
+    textSurame = Entry(findingIndStu)
+    textSurame.grid(row=4, column=2, sticky=W, padx=5, pady=5)
+    textSurame.delete(0, END)
+
+    def displayTuteesSmall():
+        global tuteeLink
+        global tutorLink
+        tutorName1 = textName.get()
+        tutorName2 = textMidName.get()
+        tutorName3 = textSurame.get()
+        findingIndStu.destroy()
+        tutees = tuteeList(tutorName1, tutorName2, tutorName3, tutorLink, tuteeLink)
+
+        listingofTuteesSmall = Toplevel(root)
+        listingofTuteesSmall.grid()
+        listingofTuteesSmall.grab_set()
+        title = tutorName1, tutorName2, tutorName3
+        label = Label(listingofTuteesSmall, text='Tutees assigned to:', font=("Calibri", 16))
+        label.grid(row=1, column=1, columnspan=2, sticky=E, padx=5, pady=5)
+        label = Label(listingofTuteesSmall, text=title, font=("Calibri", 16))
+        label.grid(row=1, column=3,columnspan=2, sticky=W, padx=5, pady=5)
+
+        label = Label(listingofTuteesSmall, text='Student No')
+        label.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+        label = Label(listingofTuteesSmall, text='Surname')
+        label.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+        label = Label(listingofTuteesSmall, text='Forename1')
+        label.grid(row=2, column=3, sticky=W, padx=5, pady=5)
+        label = Label(listingofTuteesSmall, text='Forename2')
+        label.grid(row=2, column=4, sticky=W, padx=5, pady=5)
+        label = Label(listingofTuteesSmall, text='Tutor')
+
+        def showIndStudent():
+            listingofTuteesSmall.destroy()
+            
+            indStudent = Toplevel(root)
+            indStudent.grid()
+            indStudent.grab_set()
+
+        i = 2
+        for lists in tutees:
+            
+            i += 1
+            label = Label(listingofTuteesSmall, text=lists[0])
+            label.grid(row=i, column=1, sticky=W, padx=5, pady=5)
+            label = Label(listingofTuteesSmall, text=lists[1])
+            label.grid(row=i, column=2, sticky=W, padx=5, pady=5)
+            label = Label(listingofTuteesSmall, text=lists[2])
+            label.grid(row=i, column=3, sticky=W, padx=5, pady=5)
+            label = Label(listingofTuteesSmall, text=lists[3])
+            label.grid(row=i, column=4, sticky=W, padx=5, pady=5)
+            label = Label(listingofTuteesSmall, text=lists[4])
+
+        label = Label(listingofTuteesSmall, text='Make sure to note down the student number for the wanted student.', font=("Calibri", 12))
+        label.grid(row=i+1, column=1, columnspan=5, sticky='', padx=5, pady=5)
+
+        button = Button(listingofTuteesSmall, text="Continue", command=showIndStudent)
+        button.grid(row = i+2, column=1, columnspan=5, sticky=N, padx=5, pady=5)
+
+    def closefindingIndStu():
+        findingIndStu.destroy()
+
+    button = Button(findingIndStu, text="List Tutees", command=displayTuteesSmall)
+    button.grid(row=5, column=1,  sticky=N, padx=5, pady=5)
+    button = Button(findingIndStu, text="Cancel", command=closefindingIndStu)
+    button.grid(row=5, column=2, sticky=N, padx=5, pady=5)
+
+
+
 #------------ List Tutees ------------#
 
 def listTutees():
@@ -199,22 +292,53 @@ def listTutees():
         listingofTutees.grab_set()
         title = tutorName1, tutorName2, tutorName3
         label = Label(listingofTutees, text='Tutees assigned to:', font=("Calibri", 16))
-        label.grid(row=1, column=1, sticky=E, padx=5, pady=5)
+        label.grid(row=1, column=1, columnspan=4, sticky=E, padx=5, pady=5)
         label = Label(listingofTutees, text=title, font=("Calibri", 16))
-        label.grid(row=1, column=2, sticky=W, padx=5, pady=5)
+        label.grid(row=1, column=5,columnspan=4, sticky=W, padx=5, pady=5)
+
+        label = Label(listingofTutees, text='Student No')
+        label.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Surname')
+        label.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Forename1')
+        label.grid(row=2, column=3, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Forename2')
+        label.grid(row=2, column=4, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Tutor')
+        label.grid(row=2, column=5, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Course')
+        label.grid(row=2, column=6, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Grad Level')
+        label.grid(row=2, column=7, sticky=W, padx=5, pady=5)
+        label = Label(listingofTutees, text='Univ Email')
+        label.grid(row=2, column=8, sticky=W, padx=5, pady=5)
 
         def closeListingofTutees():
             listingofTutees.destroy()
 
-        i = 1
+        i = 2
         for lists in tutees:
-            a = ', '.join(map(str, lists))
+            
             i += 1
-            label = Label(listingofTutees, text=a)
-            label.grid(row=i, column=1, columnspan=2, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[0])
+            label.grid(row=i, column=1, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[1])
+            label.grid(row=i, column=2, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[2])
+            label.grid(row=i, column=3, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[3])
+            label.grid(row=i, column=4, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[4])
+            label.grid(row=i, column=5, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[5])
+            label.grid(row=i, column=6, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[6])
+            label.grid(row=i, column=7, sticky=W, padx=5, pady=5)
+            label = Label(listingofTutees, text=lists[7])
+            label.grid(row=i, column=8, sticky=W, padx=5, pady=5)
 
         button = Button(listingofTutees, text="Okay", command=closeListingofTutees)
-        button.grid(row = i+1, column=1, columnspan=2, sticky=N, padx=5, pady=5)
+        button.grid(row = i+1, column=1, columnspan=8, sticky=N, padx=5, pady=5)
 
     def closeListingTutees():
         listingTutees.destroy()
@@ -250,7 +374,7 @@ def create_layout(frame):
     d = Button(frame, text='Assign All Students', command=FirstMatching, width=40)
     d.grid(row=5, column=2, sticky='', padx=15, pady=5)
 
-    e = Button(frame, text='Find a Student', command=donothing, width=40)
+    e = Button(frame, text='Find a Student', command=findIndStu, width=40)
     e.grid(row=6, column=2, sticky='', padx=15, pady=5)
 
     f = Button(frame, text='Re-assign a Student', command=donothing, width=40)

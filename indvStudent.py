@@ -1,7 +1,7 @@
 #2.	Searching the personal tutor list for individual students 
 import csv
 #don't worry about this oporation. input stage 1 uses this.
-#searches through tutors to find the tutors related to them
+#searches through tutors to find the tutees related to them
 def tutorList (querySN, queryFN1, queryFN2, filename, header=True):
 
 	with open(filename) as csvfile:
@@ -21,7 +21,7 @@ def tutorList (querySN, queryFN1, queryFN2, filename, header=True):
 #INPUT STAGE1: give this oporation the Surname, Forname1, Forname2, Tutor CSV file locaton, Tutee CSV file location and if there is a header(optional)
 #OUTPUT: you get 4 Arrays: Array 1 gives you the ID, array 2 gives you the surname, array 3 gives you forname1 array 4 gives you forname2. 
 #take these and use the index to deisplay them in the correct order with the right names and ID'd.
-def basicgroupstudent (querySN, queryFN1, queryFN2, tutfilename, tuteefilename, header=True):
+def basicgroupstudent (querySN, queryFN1, queryFN2, tutfilename,  header=True):
 	tutees = tutorList(querySN, queryFN1, queryFN2, tutfilename, header=True)
 	ID = []
 	namesSN = []
@@ -43,11 +43,14 @@ def basicgroupstudent (querySN, queryFN1, queryFN2, tutfilename, tuteefilename, 
 #INPUT STAGE2: give the oporation the studentID and the file location of the tutee CSV file
 #OUTPUT: you get 8 strings, ID, Surname, Forname1, Forname2, Tutor, Course, Grad Level and University Email.
 #this is the final output. either return to start or exit out of the oporation after.
-def indvTute(studentID,tuteefilename):
+def indvTutee(studentID,tuteefilename):
 	with open(tuteefilename) as csvfile:
 		rdr = csv.reader(csvfile)
 		csvfile.readline()
 		for rows in rdr:
 			if (int(rows[0])==studentID):
 				return rows[0],rows[1],rows[2],rows[3],rows[4],rows[5],rows[6],rows[7]
+
+
+
 	
