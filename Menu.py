@@ -213,12 +213,86 @@ def findIndStu():
         label.grid(row=2, column=4, sticky=W, padx=5, pady=5)
         label = Label(listingofTuteesSmall, text='Tutor')
 
+
         def showIndStudent():
             listingofTuteesSmall.destroy()
-            
+
             indStudent = Toplevel(root)
             indStudent.grid()
             indStudent.grab_set()
+            labelName = Label(indStudent, text="Search for Student information:", font=("Calibri", 16))
+            labelName.grid(row=1, column=1, columnspan=2, sticky='', padx=5, pady=5)
+            labelName = Label(indStudent, text="Enter Student Number: ")
+            labelName.grid(row=2, column=1, sticky=E, padx=5, pady=5)
+            textStuNo = Entry(indStudent)
+            textStuNo.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+            textStuNo.delete(0, END)
+
+            def closeindStudent():
+                indStudent.destroy()
+
+            def displayStudent():
+                global tuteeLink
+                studentID = int(textStuNo.get())
+                rows1,rows2,rows3,rows4,rows5,rows6,rows7,rows8 = indvTutee(studentID,tuteeLink)
+
+                indStudent.destroy()
+                studentDisplay = Toplevel(root)
+                studentDisplay.grid()
+                studentDisplay.grab_set()
+
+                label = Label(studentDisplay, text='Student Information', font=("Calibri", 16))
+                label.grid(row=1, column=1,columnspan=8, sticky='', padx=5, pady=5)
+
+                label = Label(studentDisplay, text='Student No')
+                label.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Surname')
+                label.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Forename1')
+                label.grid(row=2, column=3, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Forename2')
+                label.grid(row=2, column=4, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Tutor')
+                label.grid(row=2, column=5, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Course')
+                label.grid(row=2, column=6, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Grad Level')
+                label.grid(row=2, column=7, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text='Univ Email')
+                label.grid(row=2, column=8, sticky=W, padx=5, pady=5)
+
+                label = Label(studentDisplay, text=rows1)
+                label.grid(row=3, column=1, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows2)
+                label.grid(row=3, column=2, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows3)
+                label.grid(row=3, column=3, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows4)
+                label.grid(row=3, column=4, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows5)
+                label.grid(row=3, column=5, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows6)
+                label.grid(row=3, column=6, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows7)
+                label.grid(row=3, column=7, sticky=W, padx=5, pady=5)
+                label = Label(studentDisplay, text=rows8)
+                label.grid(row=3, column=8, sticky=W, padx=5, pady=5)
+
+                def closeDisplay():
+                    studentDisplay.destroy()
+
+                button = Button(studentDisplay, text="Close", command=closeDisplay)
+                button.grid(row=4, column=1, columnspan=8,  sticky='', padx=5, pady=10)
+
+
+
+
+            button = Button(indStudent, text="Show information", command=displayStudent)
+            button.grid(row=5, column=1,  sticky=N, padx=5, pady=5)
+            button = Button(indStudent, text="Cancel", command=closeindStudent)
+            button.grid(row=5, column=2, sticky=N, padx=5, pady=5)
+
+
 
         i = 2
         for lists in tutees:
