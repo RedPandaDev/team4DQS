@@ -6,18 +6,16 @@ from DisplayListsTutees import tuteeList
 tuteeLink = "Tutee.csv"
 tutorLink = "Tutor.csv"
 
-
 def donothing():
     filewin = Toplevel(root)
     button = Button(filewin, text="Do nothing button")
     button.pack()
 
-#------------ Open files ------------#
 
 def OpenTuteeFile():
     name = aofn(initialdir="H:",
                 defaultextension='.csv',
-                filetypes=(("All Excel Files", "*.xls;*.csv"), ("All Files", "*.*")),
+                filetypes=(("All Excel Files", "*.xls;*.csv" ), ("All Files", "*.*")),
                 title="Choose a file.")
     global tuteeLink
     tuteeLink = name;
@@ -48,8 +46,6 @@ def OpenTutorFile():
         
     return tutorLink
 
-#------------ Save file? ------------#
-
 def file_save():
     save = asfn(initialdir="C:/",
                 filetypes=(("Excel File(.xls)", "*.xls"),("CSV File(.csv)", "*.csv"), ("All Files", "*.*")),
@@ -59,8 +55,6 @@ def file_save():
     text2save = str(text.get(1.0, END)) # This saves the text?
     save.write(text2save)
     save.close() # `()` was missing.
-
-#------------ List Tutees ------------#
 
 def listTutees():
     listingTutees = Toplevel(root)
@@ -92,7 +86,7 @@ def listTutees():
         tutorName2 = textMidName.get()
         tutorName3 = textSurame.get()
         listingTutees.destroy()
-        tutees = tuteeList(tutorName1, tutorName2, tutorName3, tutorLink, tuteeLink)
+        tutees = tuteeList(tutorName1,tutorName2,tutorName3,tutorLink,tuteeLink)
 
         listingofTutees = Toplevel(root)
         listingofTutees.grid()
@@ -105,7 +99,7 @@ def listTutees():
 
         def close():
             listingofTutees.destroy()
-
+            
         i = 1
         for lists in tutees:
             a = ', '.join(map(str, lists))
@@ -116,39 +110,35 @@ def listTutees():
         button = Button(listingofTutees, text="Okay", command=close)
         button.grid(row = i+1, column=1, columnspan=2, sticky=N, padx=5, pady=5)
 
+
     button = Button(listingTutees, text="List Tutees", command=displayTutees)
     button.grid(row=4, column=1, columnspan=2, sticky=N, padx=5, pady=5)
 
+    
 
-
-
-
-
-
-#------------ Main Layout ------------#
 
 def create_layout(frame):
     frame = Frame(frame)
-    frame.pack(side=LEFT, fill=BOTH)
+    frame.pack(side = LEFT, fill=BOTH)
     w = Label(frame, text="Assign Students", font=("Helvetica", 16))
     w.pack()
 
-    b = Button(frame, text='Open Student File', command=OpenTuteeFile, width=40)
-    b.pack(pady=5, padx=30)
-    c = Button(frame, text='Open Tutor File', command=OpenTutorFile, width=40)
-    c.pack(pady=5, padx=30)
-    d = Button(frame, text='Assign All Students', command=donothing, width=40)
-    d.pack(pady=5, padx=20)
-    e = Button(frame, text='Find a Student', command=donothing, width=40)
-    e.pack(pady=5, padx=20)
-    f = Button(frame, text='Re-assign a Student', command=donothing, width=40)
-    f.pack(pady=5, padx=20)
-    g = Button(frame, text='Quota', command=donothing, width=40)
-    g.pack(pady=5, padx=20)
-    h = Button(frame, text='List Tutees', command=listTutees, width=40)
-    h.pack(pady=5, padx=20)
-    i = Button(frame, text='Exit', command=root.quit, width=40)
-    i.pack(pady=5, padx=20)
+    b = Button(frame, text='Open Student File', command=OpenTuteeFile, width = 40)
+    b.pack(pady = 5, padx = 30)
+    c = Button(frame, text='Open Tutor File', command=OpenTutorFile, width = 40)
+    c.pack(pady = 5, padx = 30)
+    d = Button(frame, text='Assign All Students', command=donothing,  width = 40)
+    d.pack(pady = 5, padx = 20)
+    e = Button(frame, text='Find a Student', command=donothing,  width = 40)
+    e.pack(pady = 5, padx = 20)
+    f = Button(frame, text='Re-assign a Student', command=donothing,  width = 40)
+    f.pack(pady = 5, padx = 20)
+    g = Button(frame, text='Quota', command=donothing,  width = 40)
+    g.pack(pady = 5, padx = 20)
+    h = Button(frame, text='List Tutees', command=listTutees,  width = 40)
+    h.pack(pady = 5, padx = 20)
+    i = Button(frame, text='Exit', command=root.quit,  width = 40)
+    i.pack(pady = 40, padx = 20)
 
 
 root = Tk()
