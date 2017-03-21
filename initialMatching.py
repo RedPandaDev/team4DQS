@@ -18,19 +18,21 @@ def listReader(tuteeFile,tutorFile):
 
 
 
-def resetMatching(tuteeList, tutorList):    #empties all relevant values for reassignment
+def resetMatching(tuteeFile, tutorFile):    #empties all relevant values for reassignment
+    tuteeList, tutorList = listReader(tuteeFile,tutorFile)
+
     for student in tuteeList:
         student[4]=""
     for tutor in tutorList:
         tutor[7] =""
+
+    rewrite(tutorList, tuteeList)
 
 
 
 
 
 def match(tutorList,tuteeList,quota):       #matches tutees with tutor groups
-
-    resetMatching(tuteeList, tutorList)
         
     for student in tuteeList:
         tuteeID = student[0]
@@ -98,22 +100,18 @@ def courseConvert(course):                  #converts tutee course into a base t
     return cType
 
 
-def setQuota():                     #Allows user to set a quota for students
-    while True:                     #error checks input to make sure input is integer
-        try:
-            UserQuota = 0
-            while UserQuota<5:
-                UserQuota = int(input("Enter a quota for each tutor: "))    #user input quota
-                if UserQuota < 5:
-                    print("Please enter a value higher than 5.")
-                if UserQuota>=5:
-                    return UserQuota
-        except ValueError:
-            print("Please enter an integer value greater than 5.")
+def setQuota(UserQuota):                     #Allows user to set a quota for students
+    try:
+        if UserQuota >= 5:
+            return True
+        else:
+            return False
+    except ValueError:
+        print("Please enter an integer value greater than 5.")
                 
-quota = setQuota()
-tuteeList,tutorList = listReader("Tutee.csv","Tutor.csv")       #example runthrough with quota of 10
-match(tutorList,tuteeList,quota)
-print("Matching complete")
-print(tuteeList)
-print(tutorList)
+
+
+def mainMatching(quota, tuteeFile, tutorFile):
+    tuteeList, tutorList = listReader(tuteeFile, tutorFile)       #example runthrough with quota of 10
+    match(tutorList, tuteeList, quota)
+    print("Matching complete")

@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.filedialog import askopenfilename as aofn
 from tkinter.filedialog import asksaveasfile as asfn
 from DisplayListsTutees import tuteeList
+from initialMatching import mainMatching, setQuota, resetMatching
+
 
 tuteeLink = "Tutee.csv"
 tutorLink = "Tutor.csv"
@@ -60,26 +62,99 @@ def file_save():
     save.write(text2save)
     save.close() # `()` was missing.
 
+#------------ Clear Matching ------------#
+def clearMatching():
+    clear = Toplevel(root)
+    clear.grid()
+    clear.grab_set()
+    label = Label(clear, text="Are you sure you want to clear student assignment?", font=("Calibri", 14))
+    label.grid(row=1, column=1, columnspan=3, sticky=W, padx=5, pady=5)
+
+    def clearIt():
+        global tuteeLink
+        global tutorLink
+        resetMatching(tuteeLink, tutorLink)
+        clear.destroy()
+
+        cleared = Toplevel(root)
+        cleared.grid()
+        cleared.grab_set()
+        label = Label(cleared, text="Assignment successfully cleared.", font=("Calibri", 14))
+        label.grid(row=1, column=1, sticky='', padx=20, pady=10)
+
+        def closeCleared():
+            cleared.destroy()
+
+        button = Button(cleared, text="Okay", command=closeCleared)
+        button.grid(row = 2, column=1, sticky='', padx=20, pady=10)
+
+
+    def closeClearing():
+        clear.destroy()
+
+    button = Button(clear, text="Okay", command=clearIt)
+    button.grid(row = 3, column=2, sticky=W, padx=15, pady=5)
+    button = Button(clear, text="Cancel", command=closeClearing)
+    button.grid(row = 3, column=3, sticky=W, padx=15, pady=5)
+
+    
+
+
 #------------ First Matching ------------#
 
 def FirstMatching():
     matching = Toplevel(root)
     matching.grid()
     matching.grab_set()
-    label = Label(matching, text="Make sure you are matching the correct files.", font=("Calibri", 16))
+    label = Label(matching, text="Make sure you are matching the correct files.", font=("Calibri", 14))
     label.grid(row=1, column=1, columnspan=3, sticky=W, padx=5, pady=5)
-    label = Label(matching, text="Enter number of students to be assigned to each tutor:")
+    label = Label(matching, text="Enter a quota for each tutor:")
     label.grid(row=2, column=1, columnspan=2, sticky=W, padx=5, pady=5)
 
     textQuota = Entry(matching)
     textQuota.grid(row=2, column=3, sticky='', padx=5, pady=5)
-   
-    def close():
+
+    def enterQuota():
+        global tuteeLink
+        global tutorLink
+        quota = int(textQuota.get())
+        checkQuota = setQuota(quota)
+        if (checkQuota == False):
+            error = Toplevel(root)
+            error.grid()
+            error.grab_set()
+
+            def closeError():
+                error.destroy()
+            label = Label(error, text="Make sure you enter an integer number, 5 or higher!", font=("Calibri", 14))
+            label.grid(row=1, column=1, columnspan=3, sticky=W, padx=5, pady=5)
+            button = Button(error, text="Okay", command=closeError)
+            button.grid(row = 3, column=2, sticky=W, padx=15, pady=5)
+        else:
+            matching.destroy()
+            mainMatching(quota, tuteeLink, tutorLink)
+
+            successMatch = Toplevel(root)
+            successMatch.grid()
+            successMatch.grab_set()
+
+            def closeSuccessMatch():
+                successMatch.destroy()
+
+            label = Label(successMatch, text="Students assigned to Tutors succesfully!", font=("Calibri", 14))
+            label.grid(row=1, column=1,  sticky='', padx=5, pady=5)
+            button = Button(successMatch, text="Okay", command=closeSuccessMatch)
+            button.grid(row = 2, column=1, sticky='', padx=15, pady=5)
+
+
+
+
+    def closeMatching():
         matching.destroy()
 
-    button = Button(matching, text="Okay", command=close)
+    button = Button(matching, text="Okay", command=enterQuota)
     button.grid(row = 3, column=2, sticky=W, padx=15, pady=5)
-    button = Button(matching, text="Cancel", command=close)
+    button = Button(matching, text="Cancel", command=closeMatching)
     button.grid(row = 3, column=3, sticky=W, padx=15, pady=5)
 
 #------------ List Tutees ------------#
@@ -182,8 +257,14 @@ def create_layout(frame):
     w = Label(frame, text="")
     w.grid(row=10, column=3, sticky='', padx=5, pady=5)
 
+    d = Button(frame, text='Clear Tutor Student Assignments', command=clearMatching, width=40)
+    d.grid(row=11, column=2, sticky='', padx=15, pady=5)
+
+    w = Label(frame, text="")
+    w.grid(row=12, column=3, sticky='', padx=5, pady=0)
+
     i = Button(frame, text='Exit', command=root.quit, width=40)
-    i.grid(row=11, column=2, sticky='', padx=15, pady=5)
+    i.grid(row=13, column=2, sticky='', padx=15, pady=10)
 
 
 root = Tk()
