@@ -22,15 +22,12 @@ def reassignmentDel(studentID, tutorID, tuteeLink, tutorLink):
                     
                     if Assigned == choice:
  #                       print("Counter = " + tuteesIn[counter])
-                        
                         del tuteesIn[counter]
                         print(tuteesIn)
                         print(tutor[7])
-
-
-                        tutor[7] = remove_punct(tuteesIn)
-
-                        
+                        tutor[7] = ','.join(map(str, tuteesIn)) 
+                        print(tutor[7])
+                      
                         tutee[4] = ""
 
                        # print(tuteesIn[counter-1])
