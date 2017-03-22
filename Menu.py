@@ -4,6 +4,7 @@ from tkinter.filedialog import asksaveasfile as asfn
 from DisplayListsTutees import tuteeList
 from initialMatching import mainMatching, setQuota, resetMatching
 from indvStudent import indvTutee
+from editV2 import reassignmentDel
 
 
 tuteeLink = "Tutee.csv"
@@ -321,7 +322,52 @@ def findIndStu():
     button.grid(row=5, column=1,  sticky=N, padx=5, pady=5)
     button = Button(findingIndStu, text="Cancel", command=closefindingIndStu)
     button.grid(row=5, column=2, sticky=N, padx=5, pady=5)
+#------------ Re-Assign Students ------------#
+def reAssign():
+    reassignTutees = Toplevel(root)
+    reassignTutees.grid()
+    reassignTutees.grab_set()
 
+    labelName = Label(reassignTutees, text="Re-Assign a Student", font=("Calibri", 16))
+    labelName.grid(row=1, column=1, columnspan=2, sticky='', padx=5, pady=5)
+    labelName = Label(reassignTutees, text="Enter Student Number for Student to be Re-Assigned: ")
+    labelName.grid(row=2, column=1, sticky=E, padx=5, pady=5)
+    textStuNo = Entry(reassignTutees)
+    textStuNo.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+    textStuNo.delete(0, END)
+
+    labelName = Label(reassignTutees, text="Enter Tutor Number to Assign the Student to: ")
+    labelName.grid(row=3, column=1, sticky=E, padx=5, pady=5)
+    textTutNo = Entry(reassignTutees)
+    textTutNo.grid(row=3, column=2, sticky=W, padx=5, pady=5)
+    textTutNo.delete(0, END)
+
+    def assign():
+        global tuteeLink
+        global tutorLink
+        studID = textStuNo.get()
+        tutorID = textTutNo.get()
+        reassignmentDel(studID, tutorID, tuteeLink, tutorLink)
+        reassignTutees.destroy()
+
+        reAssigned = Toplevel(root)
+        reAssigned.grid()
+        reAssigned.grab_set()
+        label = Label(reAssigned, text="Student was re-assigned.", font=("Calibri", 14))
+        label.grid(row=1, column=1, sticky='', padx=20, pady=10)
+        def closeReAssigned():
+            reAssigned.destroy()
+
+        button = Button(reAssigned, text="Okay", command=closeReAssigned)
+        button.grid(row=2, column=1, sticky='', padx=5, pady=5)
+
+    def closeReassignTutees():
+        reassignTutees.destroy()
+
+    button = Button(reassignTutees, text="Re-Assign Student", command=assign)
+    button.grid(row=5, column=1,  sticky=N, padx=5, pady=5)
+    button = Button(reassignTutees, text="Cancel", command=closeReassignTutees)
+    button.grid(row=5, column=2, sticky=N, padx=5, pady=5)
 
 
 #------------ List Tutees ------------#
@@ -451,7 +497,7 @@ def create_layout(frame):
     e = Button(frame, text='Find a Student', command=findIndStu, width=40)
     e.grid(row=6, column=2, sticky='', padx=15, pady=5)
 
-    f = Button(frame, text='Re-assign a Student', command=donothing, width=40)
+    f = Button(frame, text='Re-assign a Student', command=reAssign, width=40)
     f.grid(row=7, column=2, sticky='', padx=15, pady=5)
 
     g = Button(frame, text='Quota', command=donothing, width=40)

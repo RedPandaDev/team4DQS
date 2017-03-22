@@ -1,23 +1,21 @@
+from initialMatching import listReader, rewrite
 
 
-#Needs desperately Sam's code
-                
+def reassignmentDel(studentID, tutorID, tuteeLink, tutorLink):
+     tuteeList, tutorList = listReader(tuteeLink,tutorLink)
 
-
-def reassignmentDel(tuteeList,tutorList):
-    
-
-     choice = input('Select studentID for re-assignment ')
+     choice = studentID
      counter = 0
      groupCounter = 0 
      for tutee in tuteeList:
-        print(tutee)
+        
         tuteeID = tutee[0]
         if choice == tuteeID:
 
             for tutor in tutorList:
-                print(tutor)
-                tuteesIn = tutor[7].split(',')
+                
+                tuteesIn = tutor[7].split(',') 
+                
                 counter = 0
 
                 for Assigned in tuteesIn:
@@ -25,36 +23,40 @@ def reassignmentDel(tuteeList,tutorList):
                     if Assigned == choice:
  #                       print("Counter = " + tuteesIn[counter])
                         del tuteesIn[counter]
+                        print(tuteesIn)
                         tutor[7] = tuteesIn
-                        print(tutor)
+                        
+                        
                         tutee[4] = ""
-                        print(tuteeList)
 
                        # print(tuteesIn[counter-1])
                     else:
                         counter = counter+1
 
-     reassignmentAdd(choice,tuteeList,tutorList)
+     reassignmentAdd(tutorID, choice,tuteeList,tutorList)
 
 
 
-def reassignmentAdd(Add,tuteeList,tutorList):
-     newTutor = input('Enter a tutor ID ')
+def reassignmentAdd(tutorID, Add,tuteeList,tutorList):
+     newTutor = tutorID
      counter = 0
      groupCounter = 0 
      for tutee in tuteeList:
         tuteeID = tutee[0]
-        tutee[4] += newTutor
-        print(tutee)
+
         if Add == tuteeID:
             # add to tutee list too
             for tutor in tutorList:
-                print(tutor)
                 counter = 0
                 if newTutor == tutor[0]:
+                    
                     tutor[7] += "," + Add
-                    print(tutor)
+                    
+                    tutee[4] += newTutor
+                    rewrite(tutorList, tuteeList)
                     return
+
+
 
               # merge both so you enter student ID and the tutor to reassign it to
               # and it removes the tutor from student and student from tutor list
