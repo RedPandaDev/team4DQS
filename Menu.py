@@ -192,7 +192,7 @@ def findIndStu():
         tutorName2 = textMidName.get()
         tutorName3 = textSurame.get()
         findingIndStu.destroy()
-        tutees = tuteeList(tutorName1, tutorName2, tutorName3, tutorLink, tuteeLink)
+        tutees = tuteeList(tutorName3, tutorName1, tutorName2,  tutorLink, tuteeLink)
 
         listingofTuteesSmall = Toplevel(root)
         listingofTuteesSmall.grid()
@@ -359,7 +359,7 @@ def listTutees():
         tutorName2 = textMidName.get()
         tutorName3 = textSurame.get()
         listingTutees.destroy()
-        tutees = tuteeList(tutorName1, tutorName2, tutorName3, tutorLink, tuteeLink)
+        tutees = tuteeList(tutorName3, tutorName1, tutorName2,  tutorLink, tuteeLink)
 
         listingofTutees = Toplevel(root)
         listingofTutees.grid()
