@@ -7,8 +7,8 @@ from indvStudent import indvTutee
 from editV2 import reassignmentDel
 
 
-tuteeLink = "Tutee.csv"
-tutorLink = "Tutor.csv"
+tuteeLink = "NA"
+tutorLink = "NA"
 
 
 def donothing():
@@ -133,7 +133,7 @@ def FirstMatching():
             button.grid(row = 3, column=2, sticky=W, padx=15, pady=5)
         else:
             matching.destroy()
-            mainMatching(quota, tuteeLink, tutorLink)
+            leftovers, text = mainMatching(quota, tuteeLink, tutorLink)
 
             successMatch = Toplevel(root)
             successMatch.grid()
@@ -144,8 +144,13 @@ def FirstMatching():
 
             label = Label(successMatch, text="Students assigned to Tutors succesfully!", font=("Calibri", 14))
             label.grid(row=1, column=1,  sticky='', padx=5, pady=5)
+            
+            if (leftovers >0):
+                label = Label(successMatch, text=text, font=("Calibri", 12))
+                label.grid(row=2, column=1,  sticky='', padx=5, pady=5)
+
             button = Button(successMatch, text="Okay", command=closeSuccessMatch)
-            button.grid(row = 2, column=1, sticky='', padx=15, pady=5)
+            button.grid(row = 3, column=1, sticky='', padx=15, pady=5)
 
 
 

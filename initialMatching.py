@@ -33,13 +33,12 @@ def resetMatching(tuteeFile, tutorFile):    #empties all relevant values for rea
 
 
 def match(tutorList,tuteeList,quota):       #matches tutees with tutor groups
-        
+    tuteesLeft = len(tuteeList)
     for student in tuteeList:
         tuteeID = student[0]
         courseType = courseConvert(student[5])      #convert courseID to base type
         gradType = student[6]           #tutee grad type
         tutorGroup = student[4]         #group tutee assigned to
-        
         if student[4] == "":    #if tutee is unassigned
             
             for tutor in tutorList:
@@ -55,6 +54,7 @@ def match(tutorList,tuteeList,quota):       #matches tutees with tutor groups
                 if (student[4]=="" and courseType == researchType and numTutees<quota):
                     student[4] = tutor[6]   #assign student to tutor groupID
                     tutor[7] = tutor[7]+","+student[0]
+                    tuteesLeft = tuteesLeft-1
             rewrite(tutorList,tuteeList)
 
             for tutor in tutorList:
@@ -64,10 +64,12 @@ def match(tutorList,tuteeList,quota):       #matches tutees with tutor groups
                 if (student[4]=="" and numTutees<quota): 
                     student[4] = tutor[6]   #assign tutee to tutor group
                     tutor[7]= tutor[7]+","+student[0]
+                    tuteesLeft = tuteesLeft-1
                 if tutor[7][:1] == ",":
                     tutor[7]=tutor[7][1:]       #remove first comma
             rewrite(tutorList,tuteeList)
-
+    return tuteesLeft
+    #print(tuteesLeft, "unassigned. You may want to increase your quota.")
 
 
 def rewrite(tutorList, tuteeList):
@@ -115,5 +117,8 @@ def setQuota(UserQuota):                     #Allows user to set a quota for stu
 
 def mainMatching(quota, tuteeFile, tutorFile):
     tuteeList, tutorList = listReader(tuteeFile, tutorFile)       #example runthrough with quota of 10
-    match(tutorList, tuteeList, quota)
+    leftovers = match(tutorList, tuteeList, quota)
     print("Matching complete")
+    message = str(leftovers) + " students left unassigned. You may want to increase your quota."
+    print(message)
+    return leftovers, str(message)

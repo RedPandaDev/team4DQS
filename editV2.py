@@ -33,7 +33,7 @@ def reassignmentDel(studentID, tutorID, tuteeLink, tutorLink):
                        # print(tuteesIn[counter-1])
                     else:
                         counter = counter+1
-
+            
      reassignmentAdd(tutorID, choice,tuteeList,tutorList)
 
 
@@ -61,6 +61,8 @@ def reassignmentAdd(tutorID, Add,tuteeList,tutorList):
                     tutor[7] += "," + Add
                     
                     tutee[4] += newTutor
+
+
                     rewrite(tutorList, tuteeList)
                     return
 
