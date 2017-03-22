@@ -22,10 +22,14 @@ def reassignmentDel(studentID, tutorID, tuteeLink, tutorLink):
                     
                     if Assigned == choice:
  #                       print("Counter = " + tuteesIn[counter])
+                        
                         del tuteesIn[counter]
                         print(tuteesIn)
-                        tutor[7] = tuteesIn
-                        
+                        print(tutor[7])
+
+
+                        tutor[7] = remove_punct(tuteesIn)
+
                         
                         tutee[4] = ""
 
@@ -36,6 +40,13 @@ def reassignmentDel(studentID, tutorID, tuteeLink, tutorLink):
      reassignmentAdd(tutorID, choice,tuteeList,tutorList)
 
 
+def remove_punct(text):
+    text_strip = ""
+    for b in text:
+        if b in "[']":
+            b = ''
+        text_strip += b
+    return text_strip
 
 def reassignmentAdd(tutorID, Add,tuteeList,tutorList):
      newTutor = tutorID

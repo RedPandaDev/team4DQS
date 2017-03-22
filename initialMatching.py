@@ -45,13 +45,15 @@ def match(tutorList,tuteeList,quota):       #matches tutees with tutor groups
             for tutor in tutorList:
                 
                 researchType = tutor[4]     #base research type of tutor
+                
                 tutees = tutor[7]           #list of tutees in group
+                
                 currentTutees = tutor[7].split(",")
+                
                 numTutees = len(currentTutees)
 
                 if (student[4]=="" and courseType == researchType and numTutees<quota):
                     student[4] = tutor[6]   #assign student to tutor groupID
-
                     tutor[7] = tutor[7]+","+student[0]
             rewrite(tutorList,tuteeList)
 
