@@ -21,7 +21,7 @@ def tutorList (querySN, queryFN1, queryFN2, tutorCSV, header=True):
 			nameFN1 = rows[2]
 			nameFN2 = rows[3]
 #If statement to check that inputs are correct
-			if (nameSN == querySN and nameFN1 == queryFN1 and nameFN2 == queryFN2):
+			if (nameSN.lower() == querySN.lower() and nameFN1.lower() == queryFN1.lower() and nameFN2.lower() == queryFN2.lower()):
 #If the values are valid then the program will display a list of student numbers
 				if (rows[7] != ""):
 					tutee = [int(x) for x in rows[7].split(",")]
