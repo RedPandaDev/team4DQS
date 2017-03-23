@@ -515,7 +515,7 @@ def quotaRun():
         if (code != ""):
             row1, row2, row3, row4, row5, counter = CountCode(code, staffID, tuteeLink, tutorLink)
         else:
-            row1, row2, row3, row4, row5, counter = CountYear(code, staffID, tuteeLink, tutorLink)
+            row1, row2, row3, row4, row5, counter = CountYear(year, staffID, tuteeLink, tutorLink)
 
         quotaDisplay = Toplevel(root)
         quotaDisplay.grid()
