@@ -8,8 +8,8 @@ from editV2 import reassignmentDel
 from Quota import CountYear, CountCode
 
 
-tuteeLink = "Tutee.csv"
-tutorLink = "Tutor.csv"
+tuteeLink = "NA"
+tutorLink = "NA"
 
 
 def donothing():
