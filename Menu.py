@@ -5,10 +5,11 @@ from DisplayListsTutees import tuteeList
 from initialMatching import mainMatching, setQuota, resetMatching
 from indvStudent import indvTutee
 from editV2 import reassignmentDel
+from Quota import CountYear, CountCode
 
 
-tuteeLink = "NA"
-tutorLink = "NA"
+tuteeLink = "Tutee.csv"
+tutorLink = "Tutor.csv"
 
 
 def donothing():
@@ -473,6 +474,100 @@ def listTutees():
     button = Button(listingTutees, text="Cancel", command=closeListingTutees)
     button.grid(row=5, column=2, sticky=N, padx=5, pady=5)
 
+#------------ Quota ------------#
+def quotaRun():
+    quotaWin = Toplevel(root)
+    quotaWin.grid()
+    quotaWin.grab_set()
+    label = Label(quotaWin, text='Enter Information into the fields below:', font=("Calibri", 16))
+    label.grid(row=1, column=1, columnspan=4, sticky=E, padx=5, pady=5)
+
+    labelName = Label(quotaWin, text="Enter the Staff ID: ")
+    labelName.grid(row=2, column=1, sticky=E, padx=5, pady=5)
+    textStaffID = Entry(quotaWin)
+    textStaffID.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+    textStaffID.delete(0, END)
+    
+    labelName = Label(quotaWin, text="Enter ONE of the following: ")
+    labelName.grid(row=3, column=1, columnspan=4, sticky='', padx=5, pady=5)
+
+    labelName = Label(quotaWin, text="Course Code: ")
+    labelName.grid(row=4, column=1, sticky=W, padx=5, pady=5)
+    courseCode = Entry(quotaWin)
+    courseCode.grid(row=4, column=2, sticky=W, padx=5, pady=5)
+    courseCode.delete(0, END)
+    
+    labelName = Label(quotaWin, text="Year: ")
+    labelName.grid(row=4, column=3, sticky=W, padx=5, pady=5)
+    quotaYear = Entry(quotaWin)
+    quotaYear.grid(row=4, column=4, sticky=W, padx=5, pady=5)
+    quotaYear.delete(0, END)
+
+
+    def displayQuota():
+        global tuteeLink
+        global tutorLink
+        staffID = textStaffID.get()
+        code = courseCode.get()
+        year = quotaYear.get()
+        quotaWin.destroy()
+
+        if (code != ""):
+            row1, row2, row3, row4, row5, counter = CountCode(code, staffID, tuteeLink, tutorLink)
+        else:
+            row1, row2, row3, row4, row5, counter = CountYear(code, staffID, tuteeLink, tutorLink)
+
+        quotaDisplay = Toplevel(root)
+        quotaDisplay.grid()
+        quotaDisplay.grab_set()
+
+        label = Label(quotaDisplay, text='Quota for selected Tutor.', font=("Calibri", 16))
+        label.grid(row=1, column=1, columnspan=4, sticky=E, padx=5, pady=5)
+
+        label = Label(quotaDisplay, text='Staff No')
+        label.grid(row=2, column=1, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text='Surname')
+        label.grid(row=2, column=2, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text='Forename1')
+        label.grid(row=2, column=3, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text='Forename2')
+        label.grid(row=2, column=4, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text='Research Area')
+        label.grid(row=2, column=5, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text='Assigned Quota')
+        label.grid(row=2, column=6, sticky=W, padx=5, pady=5)
+
+        def closeQuotaDisplay():
+            quotaDisplay.destroy()
+
+ 
+        label = Label(quotaDisplay, text=row1)
+        label.grid(row=3, column=1, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text=row2)
+        label.grid(row=3, column=2, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text=row3)
+        label.grid(row=3, column=3, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text=row4)
+        label.grid(row=3, column=4, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text=row5)
+        label.grid(row=3, column=5, sticky=W, padx=5, pady=5)
+        label = Label(quotaDisplay, text=counter)
+        label.grid(row=3, column=6, sticky=W, padx=5, pady=5)
+
+
+        button = Button(quotaDisplay, text="Okay", command=closeQuotaDisplay)
+        button.grid(row = 4, column=1, columnspan=8, sticky='', padx=5, pady=5)
+        
+
+
+    def closeQuota():
+        quotaWin.destroy()
+
+    button = Button(quotaWin, text="okay", command=displayQuota)
+    button.grid(row=5, column=2,  sticky=N, padx=5, pady=5)
+    button = Button(quotaWin, text="Cancel", command=closeQuota)
+    button.grid(row=5, column=3, sticky=N, padx=5, pady=5)
+
 #------------ Main Layout ------------#
 
 def create_layout(frame):
@@ -505,7 +600,7 @@ def create_layout(frame):
     f = Button(frame, text='Re-assign a Student', command=reAssign, width=40)
     f.grid(row=7, column=2, sticky='', padx=15, pady=5)
 
-    g = Button(frame, text='Quota', command=donothing, width=40)
+    g = Button(frame, text='Quota', command=quotaRun, width=40)
     g.grid(row=8, column=2, sticky='', padx=15, pady=5)
 
     h = Button(frame, text='List Tutees', command=listTutees, width=40)
