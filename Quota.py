@@ -23,8 +23,8 @@ def CountYear(Year,Staff,filename,filename2, header = True):
                         
                 for row in tutor:
                     if row[0] == Staff:
-                        return row[0],row[1],row[2],row[3],row[4],count#Prints out specific rows from the tutor csv file + the counter
-            
+                        print(row[0],row[1],row[2],row[3],row[4],count)#Prints out specific rows from the tutor csv file + the counter
+                        
 
 
 def CountCode(Code,Staff,filename,filename2, header = True):
@@ -48,9 +48,8 @@ def CountCode(Code,Staff,filename,filename2, header = True):
                         
                 for row in tutor:
                     if row[0] == Staff:
-                        return row[0],row[1],row[2],row[3],row[4], count #Prints out specific rows from the tutor csv file + the counter
+                        print(row[0],row[1],row[2],row[3],row[4],count) #Prints out specific rows from the tutor csv file + the counter
 
-                   
 
 
 
